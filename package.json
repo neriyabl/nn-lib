@@ -1,0 +1,18 @@
+{
+  "name": "nn-lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node ./build/index.js",
+    "dev": "tsc -w & node --watch ./build/index.js"
+  },
+  "author": "Neriya, Bar-lev",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.6.0",
+    "typescript": "^5.2.2"
+  }
+}
