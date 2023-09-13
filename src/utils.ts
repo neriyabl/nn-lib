@@ -52,6 +52,9 @@ export class Matrix {
   }
 
   pushRow(row: Vector) {
+    if (this.#mat.length > 0 && row.len !== this.#mat[0].len) {
+      throw new Error("Can't add row with different number of columns'");
+    }
     this.#mat.push(row);
     this.#t = undefined;
   }
@@ -65,6 +68,19 @@ export class Matrix {
       }
     }
     return this.#t;
+  }
+
+  static multiply(a: Matrix, b: Matrix): Matrix | void {
+    if (a.#mat.length <= 0 || a.#mat[0].len !== b.#mat.length) return;
+    const res = new Matrix();
+    for (const row of a.#mat) {
+      const v = [];
+      for (const col of b.T.#mat) {
+        v.push(Vector.dotProduct(row, col));
+      }
+      res.pushRow(new Vector(v));
+    }
+    return res;
   }
 
   show() {
