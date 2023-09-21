@@ -7,6 +7,12 @@ type Layer = {
 
 type Ann = Layer[];
 
+const softmax = (vec: number[]): number[] =>
+  vec.map(
+    (val) =>
+      Math.exp(val) / vec.map((val) => Math.exp(val)).reduce((a, b) => a + b)
+  );
+
 export const buildNn = (numLayers: number[]): Ann | void => {
   if (numLayers.length < 2) {
     return;
@@ -36,7 +42,7 @@ export const predict = (ann: Ann, inputs: number[]): number[] => {
     // activation relU
     annRes = sum.map((row) => row.map((v) => Math.max(0, v)));
   }
-  return transpose(annRes)[0];
+  return softmax(transpose(annRes)[0]);
 };
 
 /*
