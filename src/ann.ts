@@ -1,11 +1,13 @@
-import { randomMat, randomVec } from "./matrix";
+import { matMul, matSum, randomMat, randomVec, transpose } from "./matrix";
 
 type Layer = {
   weights: number[][];
   biases: number[];
 };
 
-export const buildNn = (numLayers: number[]): Layer[] | void => {
+type Ann = Layer[];
+
+export const buildNn = (numLayers: number[]): Ann | void => {
   if (numLayers.length < 2) {
     return;
   }
@@ -20,6 +22,21 @@ export const buildNn = (numLayers: number[]): Layer[] | void => {
     n = layerSize;
   }
   return res;
+};
+
+export const predict = (ann: Ann, inputs: number[]): number[] => {
+  if (ann?.[0]?.weights?.[0]?.length !== inputs.length) {
+    return [];
+  }
+  let annRes = transpose([inputs]);
+  for (const layer of ann) {
+    // W*i+b
+    const mul = matMul(layer.weights, annRes);
+    const sum = matSum(mul, transpose([layer.biases]));
+    // activation relU
+    annRes = sum.map((row) => row.map((v) => Math.max(0, v)));
+  }
+  return transpose(annRes)[0];
 };
 
 /*

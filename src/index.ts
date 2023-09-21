@@ -1,4 +1,4 @@
-import { buildNn } from "./ann";
+import { buildNn, predict } from "./ann";
 import { matMul, matSum, transpose } from "./matrix";
 import { Matrix } from "./utils";
 
@@ -72,9 +72,19 @@ function main() {
 
   console.log(matSum(m21, m22));
 
-  console.log("888888888888888888888888888888888");
+  console.log("+++++++++++++++++++++++++++++++++");
   const nn = buildNn([10, 5, 5, 2]);
-  console.log(JSON.stringify(nn, null, 2));
+  // console.log(JSON.stringify(nn, null, 2));
+
+  console.log("predict ...................");
+  if (nn) {
+    console.log(
+      predict(
+        nn,
+        [0.2, 0.4, 0.11, 0.0234, 0.234, 0.11, 0.003, 0.11, 0.0054, 0.52257]
+      )
+    );
+  }
 }
 
 main();

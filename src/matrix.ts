@@ -10,14 +10,14 @@ export const randomMat = (m: number, n: number): number[][] => {
     .map((_) =>
       Array(n)
         .fill(0)
-        .map((_) => Math.random())
+        .map((_) => Math.random() * 2 - 1)
     );
 };
 
 export const randomVec = (n: number) => {
   return Array(n)
     .fill(0)
-    .map((_) => Math.random());
+    .map((_) => Math.random() * 2 - 1);
 };
 
 export const transpose = (mat: number[][]): number[][] => {
