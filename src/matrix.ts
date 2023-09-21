@@ -20,6 +20,29 @@ export const randomVec = (n: number) => {
     .map((_) => Math.random() * 2 - 1);
 };
 
+export const dotProd = (v1: number[], v2: number[]): number => {
+  if (v1.length !== v2.length) return NaN;
+  let res = 0;
+  for (let i = 0; i < v1.length; i++) {
+    res += v1[i] * v2[i];
+  }
+  return res;
+};
+
+export const vecSum = (v1: number[], v2: number[]): number[] => {
+  if (v1.length !== v2.length) {
+    throw Error("vectors not in same length");
+  }
+  return v1.map((value, idx) => value + v2[idx]);
+};
+
+export const vecDiff = (v1: number[], v2: number[]): number[] => {
+  if (v1.length !== v2.length) {
+    throw Error("vectors not in same length");
+  }
+  return v1.map((value, idx) => value - v2[idx]);
+};
+
 export const transpose = (mat: number[][]): number[][] => {
   if (mat.length === 0) {
     return [];
@@ -29,15 +52,6 @@ export const transpose = (mat: number[][]): number[][] => {
   const res = zeroMat(m, n);
   for (let i = 0; i < n * m; i++) {
     res[Math.floor(i / n)][i % n] = mat[i % n][Math.floor(i / n)];
-  }
-  return res;
-};
-
-export const dotProd = (v1: number[], v2: number[]): number => {
-  if (v1.length !== v2.length) return NaN;
-  let res = 0;
-  for (let i = 0; i < v1.length; i++) {
-    res += v1[i] * v2[i];
   }
   return res;
 };
@@ -57,13 +71,6 @@ export const matMul = (m1: number[][], m2: number[][]): number[][] => {
     res.push(v);
   }
   return res;
-};
-
-export const vecSum = (v1: number[], v2: number[]) => {
-  if (v1.length !== v2.length) {
-    throw Error("vectors not in same length");
-  }
-  return v1.map((item1, idx) => item1 + v2[idx]);
 };
 
 export const matSum = (m1: number[][], m2: number[][]) => {

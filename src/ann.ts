@@ -1,4 +1,11 @@
-import { matMul, matSum, randomMat, randomVec, transpose } from "./matrix";
+import {
+  matMul,
+  matSum,
+  randomMat,
+  randomVec,
+  transpose,
+  vecDiff,
+} from "./matrix";
 
 type Layer = {
   weights: number[][];
@@ -43,6 +50,29 @@ export const predict = (ann: Ann, inputs: number[]): number[] => {
     annRes = sum.map((row) => row.map((v) => Math.max(0, v)));
   }
   return softmax(transpose(annRes)[0]);
+};
+
+const backpropagation = (ann: Ann, outputError: number[]) => {
+  let error = outputError;
+  for (let i = ann.length - 1; i >= 0; i++) {
+    // TODO continue from here
+  }
+};
+
+export const train = (ann: Ann, inputs: number[][], outputs: number[][]) => {
+  if (inputs.length !== outputs.length) {
+    throw Error("Missing inputs or outputs");
+  }
+
+  for (let i = 0; i < inputs.length; i++) {
+    try {
+      const predicted = predict(ann, inputs[i]);
+      //calculate Error
+      const error = vecDiff(outputs[i], predicted);
+      //backpropagation change ann inplace
+      backpropagation(ann, error);
+    } catch (e) {}
+  }
 };
 
 /*
