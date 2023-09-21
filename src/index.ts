@@ -1,5 +1,6 @@
-import { matMul, transpose, zero } from "./matrix";
-import { Matrix, Vector } from "./utils";
+import { buildNn } from "./ann";
+import { matMul, matSum, transpose } from "./matrix";
+import { Matrix } from "./utils";
 
 function main() {
   const m1 = Matrix.fromArray([
@@ -22,7 +23,7 @@ function main() {
   console.log("m1 * m2");
   console.time("class");
   let res;
-  for (let i = 0; i < 1000000; i++) res = Matrix.multiply(m1, m2);
+  for (let i = 0; i < 100000; i++) res = Matrix.multiply(m1, m2);
   console.timeEnd("class");
   if (res) {
     res.show();
@@ -51,9 +52,29 @@ function main() {
   ];
 
   console.time("func");
-  for (let i = 0; i < 10000000; i++) res = matMul(m11, m12);
+  for (let i = 0; i < 100000; i++) res = matMul(m11, m12);
   console.timeEnd("func");
   console.log(res);
+
+  console.log();
+  console.log();
+  console.log();
+
+  const m21 = [
+    [1, 2, 3],
+    [1, 2, 3],
+  ];
+
+  const m22 = [
+    [1, 1, 1],
+    [3, 2, 1],
+  ];
+
+  console.log(matSum(m21, m22));
+
+  console.log("888888888888888888888888888888888");
+  const nn = buildNn([10, 5, 5, 2]);
+  console.log(JSON.stringify(nn, null, 2));
 }
 
 main();

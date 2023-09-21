@@ -1,7 +1,23 @@
-export const zero = (m: number, n: number) => {
+export const zeroMat = (m: number, n: number): number[][] => {
   return Array(m)
     .fill(0)
     .map((_) => Array(n).fill(0));
+};
+
+export const randomMat = (m: number, n: number): number[][] => {
+  return Array(m)
+    .fill(0)
+    .map((_) =>
+      Array(n)
+        .fill(0)
+        .map((_) => Math.random())
+    );
+};
+
+export const randomVec = (n: number) => {
+  return Array(n)
+    .fill(0)
+    .map((_) => Math.random());
 };
 
 export const transpose = (mat: number[][]): number[][] => {
@@ -10,7 +26,7 @@ export const transpose = (mat: number[][]): number[][] => {
   }
   const n = mat.length;
   const m = mat[0].length;
-  const res: number[][] = zero(m, n);
+  const res = zeroMat(m, n);
   for (let i = 0; i < n * m; i++) {
     res[Math.floor(i / n)][i % n] = mat[i % n][Math.floor(i / n)];
   }
@@ -41,4 +57,26 @@ export const matMul = (m1: number[][], m2: number[][]): number[][] => {
     res.push(v);
   }
   return res;
+};
+
+export const vecSum = (v1: number[], v2: number[]) => {
+  if (v1.length !== v2.length) {
+    throw Error("vectors not in same length");
+  }
+  return v1.map((item1, idx) => item1 + v2[idx]);
+};
+
+export const matSum = (m1: number[][], m2: number[][]) => {
+  if (
+    !m1.length ||
+    !m2.length ||
+    m1.length !== m2.length ||
+    m1[0].length !== m2[0].length
+  ) {
+    throw Error("length not match");
+  }
+  const m = m1.length;
+  const n = m1[0].length;
+
+  return m1.map((v1, rowIdx) => vecSum(v1, m2[rowIdx]));
 };
